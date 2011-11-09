@@ -51,4 +51,12 @@ class TestBinaryTree extends PHPUnit_Framework_TestCase
         $this->assertEquals(15,   $this->bst->search(15));
         $this->assertEquals(null, $this->bst->search(100)); // not exist
     }
+
+    public function testSearch2()
+    {
+        $this->assertEquals(13,   $this->bst->search2(13));
+        $this->assertEquals(5,    $this->bst->search2(5));
+        $this->assertEquals(15,   $this->bst->search2(15));
+        $this->assertEquals(null, $this->bst->search2(100)); // not exist
+    }
 }

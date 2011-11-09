@@ -13,8 +13,6 @@
  *   2011年 10月 31日 月曜日 11:12:15 JST start
  *                           12:00        end   search()の実装
  *
- * @考えたこと
- *
  * @やりたいこと
  * 　二分木探索のデータ構造を作る、追加、削除、参照、探索 <- must
  * 　AVL木
@@ -45,13 +43,37 @@ class BinarySearchTree
 
     public function insert($value)
     {
+        $p = $this;
+        while ($p != null)
+        {
+            if ($p->value >= $value) {
+                $parent = $p;
+                $p = $p->left;
+            } else if ($p->value < $value) {
+                $parent = $p;
+                $p = $p->right;
+            } else {
+                return null;
+            }
+            if ($p_left === null) {
+                $p_left = new BinarySearchTree($value, null, null);
+            } else if ($p_right === null) {
+                $p_right = new BinarySearchTree($value, null, null);
+            } 
+        }
     }
 
     public function delete()
     {
     }
     
-    // 再帰
+    /**
+     * 対象の値を探索する(再帰:redundancyを用いた実装)
+     * TODO 探索回数 を返す
+     *
+     * @param  integer ラベル
+     * @return integer 探索結果のラベル or null
+     */
     public function search($value)
     {
         if ($this->value === $value) {
@@ -65,23 +87,27 @@ class BinarySearchTree
         }
     }
 
-    // ループ
-    // 失敗
-    /*
-    public function search($value)
+    /**
+     * 対象の値を探索する(roopを用いた実装)
+     * TODO 探索回数 を返す
+     *
+     * @param  integer ラベル
+     * @return integer 探索結果のラベル or null
+     */
+    public function search2($value)
     {
-        while ($this != null)
+        $p = $this;
+        while ($p != null)
         {
-            if ($this->value === $value) {
-                return $this->value;
-            } else if ($this->value > $value) {
-                $this = $this->left;
-            } else if ($this->value < $value) {
-                $this = $this->right;
+            if ($p->value === $value) {
+                return $p->value;
+            } else if ($p->value > $value) {
+                $p = $p->left;
+            } else if ($p->value < $value) {
+                $p = $p->right;
             } else {
                 return null;
             }
         }
     }
-     */
 }
