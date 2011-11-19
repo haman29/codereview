@@ -14,9 +14,9 @@ class TestBowling extends PHPUnit_Framework_TestCase
             array(10,0),  // ストライク
             array(9,1),   // スペア
             array(7,2),
-            array(9,0),
-            array(9,0),
-            array(9,0),
+            array(10,0),
+            array(10,0),
+            array(10,0),
             array(9,0),
         );
         $this->bowling = new Bowling($this->pins);
@@ -24,7 +24,7 @@ class TestBowling extends PHPUnit_Framework_TestCase
 
     public function testCalcScore()
     {
+        var_dump($this->bowling->changeDisplayOfPins());
         $this->assertEquals(97, $this->bowling->calcScore());
-        //$this->assertEquals(13, $this->bst->value);
     }
 }

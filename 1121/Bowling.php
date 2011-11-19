@@ -5,7 +5,6 @@
  * 
  * @autor Kyohei Hamada
  * @date 2011年 11月 21日
- * @履歴 2011年 11月 16日 水曜日 20:15:40 JST start
  */
 
 /**
@@ -13,8 +12,9 @@
  */
 class Bowling
 {
-    public $pins; // 倒したピン
-    public $score;   // 各フレームのスコア
+    public $pins;        // 各フレームで倒したピン
+    public $displayPins; // $pins をボーリングの表示用に変更したもの
+    public $score;       // 各フレームのスコア
 
     /**
      * 倒したピンの本数をセット
@@ -35,10 +35,19 @@ class Bowling
         return ($frame[0] + $frame[1]) === 10 ? true : false;
     }
 
-    public function calcScore()
+    public function changeDisplayOfPins()
     {
-        foreach ($this->pins as $key => $frame)
-        {
+        foreach ($this->pins as $i => $frame) {
+            foreach ($frame as $j => $pin) {
+                $displayPins[$i][$j] = $pin;
+            }
+        }
+        return $displayPins;
+    }
+
+    public function calcScoreForEachFrame()
+    {
+        foreach ($this->pins as $key => $frame) {
             if ($this->_isStrike($frame)) {
                 $this->score[$key] = $frame[0] + $frame[1];
                 if ($key + 1 < 10) {
@@ -53,6 +62,11 @@ class Bowling
                 $this->score[$key] = $frame[0] + $frame[1];
             }
         }
+        return $this->score;
+    }
+
+    public function calcTotalScore()
+    {
         $totalScore = 0; // スコアの累計
         foreach ($this->score as $score) {
             $totalScore += $score;
