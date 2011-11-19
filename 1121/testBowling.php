@@ -22,14 +22,20 @@ class TestBowling extends PHPUnit_Framework_TestCase
         $this->bowling = new Bowling($this->pins);
     }
 
-    public function testGetDisplayOfPins()
+    public function testDisplay()
     {
-        $this->assertEquals($this->pins, $this->bowling->getDisplayOfPins());
+        $this->bowling->displayPins();
+
+        $this->bowling->calcScoresForEachFrame();
+        $this->bowling->displayScores();
+
+        $this->bowling->calcAccumulateScoreForEachFrame();
+        $this->bowling->displayAccumulateScores();
     }
 
     public function testCalcTotalScore()
     {
-        $this->bowling->calcScoreForEachFrame();
+        $this->bowling->calcScoresForEachFrame();
         $this->assertEquals(148, $this->bowling->calcTotalScore());
     }
 }
