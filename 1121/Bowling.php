@@ -3,7 +3,7 @@
  * 新卒コードレビュー
  * 課題：ボーリングのスコアを計算する
  * 現状：10フレーム目を考慮してないところまで完成
- * 
+ *
  * @autor Kyohei Hamada
  * @date 2011年 11月 21日
  */
@@ -17,36 +17,41 @@ class Bowling
     public $scores;           // 各フレームのスコア
     public $accumulateScores; // 各フレームの累積スコア
 
-    // ボツ
-    public $displayPins; // $pins をボーリングの表示用に変更したもの
-
-    /**
-     * 倒したピンの本数をセット
-     * TODO ランダムに値を入れる
-     */
+    // TODO ランダムに値を入れる
     public function __construct($pins)
     {
         $this->pins = $pins;
     }
 
+    public function displayFrame()
+    {
+        echo '|';
+        for($i = 1; $i <= 10; $i++) {
+            printf(" %2d  ", $i);
+            echo '|';
+        }
+        echo "\n";
+    }
+
     public function displayPins()
     {
         echo '|';
-        foreach ($this->pins as $frame) {
-            foreach ($frame as $i => $pin) {
-                echo $pin;
-                if ($i === 0) echo ',';
+        foreach ($this->pins as $i => $frame) {
+            foreach ($frame as $j => $pin) {
+                printf("%2d", $pin);
+                if ($j === 0) echo ',';
+                if ($i === 9 && $j === 1) echo ','; // 10 frame
             }
             echo '|';
         }
         echo "\n";
     }
 
-    public function displayscores()
+    public function displayScores()
     {
         echo '|';
         foreach ($this->scores as $score) {
-            echo $score;
+            printf(" %3d ", $score);
             echo '|';
         }
         echo "\n";
@@ -56,12 +61,11 @@ class Bowling
     {
         echo '|';
         foreach ($this->accumulateScores as $score) {
-            echo $score;
+            printf(" %3d ", $score);
             echo '|';
         }
         echo "\n";
     }
-
 
     private function _isStrike($frame)
     {
@@ -112,18 +116,5 @@ class Bowling
             $totalScore += $score;
         }
         return $totalScore;
-    }
-
-
-
-    // ボツ(表示用に記号を追加するなどしたかった)
-    public function getDisplayOfPins()
-    {
-        foreach ($this->pins as $i => $frame) {
-            foreach ($frame as $j => $pin) {
-                $this->displayPins[$i][$j] = $pin;
-            }
-        }
-        return $this->displayPins;
     }
 }
