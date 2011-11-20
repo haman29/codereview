@@ -2,7 +2,6 @@
 /**
  * 新卒コードレビュー
  * 課題：ボーリングのスコアを計算する
- * 現状：10フレーム目を考慮してないところまで完成
  *
  * @autor Kyohei Hamada
  * @date 2011年 11月 21日
@@ -25,7 +24,7 @@ class Bowling
 
     public function displayFrame()
     {
-        echo '|';
+        echo '　フレーム|';
         for($i = 1; $i <= 10; $i++) {
             printf(" %2d  ", $i);
             echo '|';
@@ -35,12 +34,12 @@ class Bowling
 
     public function displayPins()
     {
-        echo '|';
+        echo '倒したピン|';
         foreach ($this->pins as $i => $frame) {
             foreach ($frame as $j => $pin) {
                 printf("%2d", $pin);
                 if ($j === 0) echo ',';
-                if ($i === 9 && $j === 1) echo ','; // 10 frame
+                if ($i === 9 && $j === 1) echo ','; // 10フレーム目
             }
             echo '|';
         }
@@ -49,7 +48,7 @@ class Bowling
 
     public function displayScores()
     {
-        echo '|';
+        echo '　　スコア|';
         foreach ($this->scores as $score) {
             printf(" %3d ", $score);
             echo '|';
@@ -59,7 +58,7 @@ class Bowling
 
     public function displayAccumulateScores()
     {
-        echo '|';
+        echo '累積スコア|';
         foreach ($this->accumulateScores as $score) {
             printf(" %3d ", $score);
             echo '|';
@@ -81,11 +80,13 @@ class Bowling
     public function calcScoresForEachFrame()
     {
         foreach ($this->pins as $key => $frame) {
-            if ($this->_isStrike($frame)) {
+            if ($key + 1 === 10) { // 10フレーム目
+                $this->scores[$key] = $frame[0] + $frame[1] + $frame[2];
+            } else if ($this->_isStrike($frame)) {
                 $this->scores[$key] = $frame[0];
-                if ($key + 1 < 10) {
+                if ($key + 1 < 10) { // 9フレーム目以下
                     $this->scores[$key] += $this->pins[$key + 1][0] + $this->pins[$key + 1][1];
-                    if ($key + 2 < 10) {
+                    if ($key + 2 < 10) { // 8フレーム目以下
                         if ($this->_isStrike($this->pins[$key + 1])) {
                             $this->scores[$key] += $this->pins[$key + 2][0];
                         }
