@@ -73,7 +73,7 @@ class Bowling
 
     private function _isSpare($frame)
     {
-        return ($frame[0] !== 0) && ($frame[0] + $frame[1]) === 10 ? true : false;
+        return ($frame[0] !== 10) && ($frame[0] + $frame[1]) === 10 ? true : false;
     }
 
     // TODO 8,9フレーム目かどうかの条件をメソッド化する
@@ -94,13 +94,6 @@ class Bowling
                     $this->scores[$key] = $frame[0] + $frame[1];
                 }
             }
-        }
-    }
-
-    public function calcAccumulateScoreForEachFrame()
-    {
-        foreach ($this->scores as $i => $score) {
-            $this->accumulateScores[$i] = ($i === 0) ? $score : $this->accumulateScores[$i - 1] + $score;
         }
     }
 
