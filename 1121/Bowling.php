@@ -73,7 +73,7 @@ class Bowling
 
     private function _isSpare($frame)
     {
-        return ($frame[0] + $frame[1]) === 10 ? true : false;
+        return ($frame[0] !== 0) && ($frame[0] + $frame[1]) === 10 ? true : false;
     }
 
     // TODO 8,9フレーム目かどうかの条件をメソッド化する
@@ -82,23 +82,17 @@ class Bowling
         foreach ($this->pins as $key => $frame) {
             if ($key + 1 === 10) { // 10フレーム目
                 $this->scores[$key] = $frame[0] + $frame[1] + $frame[2];
-            } else if ($this->_isStrike($frame)) {
-                $this->scores[$key] = $frame[0];
-                if ($key + 1 < 10) { // 9フレーム目以下
-                    $this->scores[$key] += $this->pins[$key + 1][0] + $this->pins[$key + 1][1];
-                    if ($key + 2 < 10) { // 8フレーム目以下
-                        if ($this->_isStrike($this->pins[$key + 1])) {
-                            $this->scores[$key] += $this->pins[$key + 2][0];
-                        }
+            } else { // 1-9フレーム目
+                if ($this->_isStrike($frame)) {
+                    $this->scores[$key] = $frame[0] + $this->pins[$key + 1][0] + $this->pins[$key + 1][1];
+                    if ($key + 2 < 10 && $this->_isStrike($this->pins[$key + 1])) { // 8フレーム目以下
+                        $this->scores[$key] += $this->pins[$key + 2][0];
                     }
+                } else if ($this->_isSpare($frame)) {
+                    $this->scores[$key] = $frame[0] + $frame[1] + $this->pins[$key + 1][0];
+                } else {
+                    $this->scores[$key] = $frame[0] + $frame[1];
                 }
-            } else if ($this->_isSpare($frame)) {
-                $this->scores[$key] = $frame[0] + $frame[1];
-                if ($key + 1 < 10) {
-                    $this->scores[$key] += $this->pins[$key + 1][0];
-                }
-            } else {
-                $this->scores[$key] = $frame[0] + $frame[1];
             }
         }
     }
@@ -115,6 +109,7 @@ class Bowling
         $totalScore = 0; // スコアの累計
         foreach ($this->scores as $score) {
             $totalScore += $score;
+            $this->accumulateScores[] = $totalScore;
         }
         return $totalScore;
     }

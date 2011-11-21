@@ -35,6 +35,7 @@ class TestBowling extends PHPUnit_Framework_TestCase
         $this->bowling2 = new Bowling($pins2);
     }
 
+    // 表示するのみ
     public function testBowling()
     {
         $this->bowling->displayFrame();
@@ -44,10 +45,11 @@ class TestBowling extends PHPUnit_Framework_TestCase
         $this->bowling->calcScoresForEachFrame();
         $this->bowling->displayScores();
 
-        $this->bowling->calcAccumulateScoreForEachFrame();
+        $this->bowling->calcTotalScore();
         $this->bowling->displayAccumulateScores();
     }
 
+    // 表示するのみ
     public function testBowling2()
     {
         $this->bowling2->displayFrame();
@@ -57,7 +59,7 @@ class TestBowling extends PHPUnit_Framework_TestCase
         $this->bowling2->calcScoresForEachFrame();
         $this->bowling2->displayScores();
 
-        $this->bowling2->calcAccumulateScoreForEachFrame();
+        $this->bowling2->calcTotalScore();
         $this->bowling2->displayAccumulateScores();
     }
 
@@ -65,6 +67,8 @@ class TestBowling extends PHPUnit_Framework_TestCase
     {
         $this->bowling->calcScoresForEachFrame();
         $this->assertEquals(141, $this->bowling->calcTotalScore());
+
+        $this->bowling2->calcScoresForEachFrame();
         $this->assertEquals(300, $this->bowling2->calcTotalScore());
     }
 }
