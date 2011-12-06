@@ -3,6 +3,7 @@ require_once('Mahojin.php');
 class TestMahojin extends PHPUnit_Framework_TestCase
 {
     public $mahojin1;
+	public $mahojin2;
 
     public function testQuestion1()
     {
@@ -17,7 +18,33 @@ class TestMahojin extends PHPUnit_Framework_TestCase
             ),
             15
         );
-        $sum = $this->mahojin1->getThreeNum();
-        $this->assertEquals(15, $sum);
+        $this->mahojin1->displayNumbers();
+        $this->assertEquals(15, $this->mahojin1->getThreeNum());
+        $this->mahojin1->setNumberAboutRows();
+        $this->mahojin1->displayNumbers();
+        $this->mahojin1->setNumberAboutColumns();
+        $this->mahojin1->displayNumbers();
+        $this->mahojin1->setNumberAboutRows();
+        $this->mahojin1->displayNumbers();
     }
+
+	public function testQuestion2()
+	{
+        $this->mahojin2 = new Mahojin(
+            array(
+                array(-1, 60, -1),
+                array(-1, 35, -1),
+				array(40, 10, -1),
+            )
+        );
+        $this->mahojin2->displayNumbers();
+        $this->assertEquals(105, $this->mahojin2->getThreeNum());
+        $this->mahojin2->setNumberAboutRows();
+        $this->mahojin2->displayNumbers();
+        $this->mahojin2->setNumberAboutColumns();
+        $this->mahojin2->displayNumbers();
+        $this->mahojin2->setNumberAboutRows();
+        $this->mahojin2->displayNumbers();
+        exit;
+	}
 }
