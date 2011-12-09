@@ -8,6 +8,8 @@
  * 2011年 12月  6日 火曜日 00:56:21 JST stop
  * 2011年 12月  6日 火曜日 23:00:22 JST start
  * 2011年 12月  7日 水曜日 00:06:02 JST end  question1 を解くことができた
+ * 2011年 12月  9日 金曜日 22:59:52 JST start
+ * 2011年 12月  9日 金曜日 23:46:38 JST end 
  *
  * @todo
  *  正しく値が入っているかチェックするテストコードを書く
@@ -31,7 +33,7 @@ class Mahojin
     public function __construct($numbers, $useNumbers = array(), $sum = -1)
     {
         $this->numbers = $numbers;
-        if ($sum !== -1) $this->sum = $sum;
+        $this->sum     = $sum;
         foreach($numbers as $column){
             $this->useNumbers = array_diff($useNumbers, $column);
         }
@@ -50,15 +52,9 @@ class Mahojin
 
     public function getThreeNum()
     {
-		if ($sum !== -1) {
-			return $this->sum;
-		} else {
-			// todo ここのごにょごにょを書く
-			return 105;
-		}
+        return $this->sum;
     }
 
-    // todo スマートに集合の関数使う
     public function setNumberAboutRows()
     {
         foreach ($this->numbers as $i => $row) {
@@ -96,6 +92,25 @@ class Mahojin
         $this->transport();
         $this->setNumberAboutRows();
         $this->transport();
+    }
+
+    public function roop()
+    {
+        while(true) {
+            $this->displayNumbers();
+            $this->setNumberAboutRows();
+            $this->displayNumbers();
+            $this->setNumberAboutColumns();
+            $flag = false;
+            foreach ($this->numbers as $k => $row) {
+                if (in_array(-1, $this->numbers[$k])) $flag = true;
+            }
+            if ( ! $flag) exit;
+        }
+    }
+
+    public function checkRowSum()
+    {
     }
 
     // 斜め
